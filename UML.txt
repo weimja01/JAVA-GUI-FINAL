@@ -1,0 +1,70 @@
+classDiagram
+    class BudgetManager {
+        -ArrayList~Transaction~ transactions
+        -ArrayList~Category~ categories
+        -double currentBalance
+        -String fileName
+        +addTransaction(Transaction) void
+        +removeTransaction(Transaction) void
+        +addCategory(Category) void
+        +removeCategory(Category) void
+        +calculateBalance() double
+        +getTransactionsByCategory(Category) ArrayList~Transaction~
+        +getMonthlySpending(Category) double
+        +saveToFile(String) void
+        +loadFromFile(String) void
+        +getCategories() ArrayList~Category~
+        +getTransactions() ArrayList~Transaction~
+    }
+
+    class Transaction {
+        -double amount
+        -String description
+        -LocalDate transactionDate
+        -Category category
+        -TransactionType transactionType
+        +Transaction(double, String, LocalDate, Category, TransactionType)
+        +getAmount() double
+        +setAmount(double) void
+        +getDescription() String
+        +setDescription(String) void
+        +getTransactionDate() LocalDate
+        +setTransactionDate(LocalDate) void
+        +getCategory() Category
+        +setCategory(Category) void
+        +getTransactionType() TransactionType
+        +setTransactionType(TransactionType) void
+        +toString() String
+    }
+
+    class Category {
+        -String categoryName
+        -double monthlyBudgetLimit
+        -Color displayColor
+        +Category(String, double, Color)
+        +getCategoryName() String
+        +setCategoryName(String) void
+        +getMonthlyBudgetLimit() double
+        +setMonthlyBudgetLimit(double) void
+        +getDisplayColor() Color
+        +setDisplayColor(Color) void
+        +toString() String
+        +equals(Object) boolean
+    }
+
+    class TransactionType {
+        <<enumeration>>
+        INCOME
+        EXPENSE
+    }
+
+    %% Relationships
+    BudgetManager "1" *-- "0..*" Transaction : contains
+    BudgetManager "1" *-- "0..*" Category : manages
+    Transaction "0..*" --> "1" Category : categorized by
+    Transaction "1" --> "1" TransactionType : has type
+
+    %% Notes
+    note for BudgetManager "Main controller class that manages all transactions and categories. Handles file I/O operations."
+    note for Transaction "Represents individual financial transactions (income or expense) with date and category."
+    note for Category "Defines spending categories with budget limits and display properties."
