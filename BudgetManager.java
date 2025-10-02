@@ -156,7 +156,7 @@ public class BudgetManager {
         System.out.println("==========================\n");
     }
     
-    // Placeholder methods for file I/O (to be implemented later)
+    // methods for file I/O (implement later)
     public void saveToFile(String filename) {
         System.out.println("Save functionality will be implemented with GUI.");
     }
